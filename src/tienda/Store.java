@@ -94,7 +94,7 @@ public class Store {
 	    	Game game = buscarGame(idGame);
 	    	
     						
-    		if( game.getStock() > cantidad && cantidad <= 1) {
+    		if( game.getStock() < cantidad || cantidad <= 1) {
     							
     			throw new StockInsuficienteException(
     					"No hay Stock duficiente para su compra");
@@ -105,7 +105,7 @@ public class Store {
     							
     		}	
     		
-    		Purchase purchase = new Purchase (customer  );
+    		Purchase purchase = new Purchase (customer, game, cantidad);
     		
     						
     		if( customer.getBalance() < purchase.getTotal()) {
@@ -119,8 +119,6 @@ public class Store {
     			customer.reducirSaldo(purchase.getTotal());
     		
     		}
-	    			
-	    	
 	    	return true;
 	    	
 	    }

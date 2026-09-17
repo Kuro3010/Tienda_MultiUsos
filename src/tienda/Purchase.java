@@ -1,39 +1,31 @@
 package tienda;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Purchase {
 
 	private Customer comprador;
-    private List<Game> juegos;
-    private List<Integer> cantidades;
+    private Game juego;
+    private int cantidad;
 
-    public Purchase(Customer comprador) {
+    public Purchase(Customer comprador, Game juego, int cantidad) {
         this.comprador = comprador;
-        this.juegos = new ArrayList<>();
-        this.cantidades = new ArrayList<>();
+        this.juego = juego;
+        this.cantidad = cantidad;
     }
 
-    public void añadirAticulo(Game juego, int cantidad) {
-        juegos.add(juego);
-        cantidades.add(cantidad);
-    }
-
+ 
     public Customer getComprador() {
         return comprador;
     }
 
-    public List<Game> getJuegosACOmprar() {
-        return juegos;
+    public Game getJuegosACOmprar() {
+        return juego;
     }
 
     public double getTotal() {
         double total = 0;
-
-        for (int i = 0; i < juegos.size(); i++) {
-            total += juegos.get(i).getPrecio() * cantidades.get(i);
-        }
+        
+            total += juego.getPrecio() * cantidad;
 
         return total;
     }
