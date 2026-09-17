@@ -7,11 +7,21 @@ public class Store {
 		private ArrayList<Game> games;
 	    private ArrayList<Customer> customers;
 	    private ArrayList<Purchase> purchases;
-
+	    
 	    public Store() {
 	        games = new ArrayList<>();
 	        customers = new ArrayList<>();
 	        purchases = new ArrayList<>();
+
+	        games.add(new Game(1, "Mario 64", 25.00, Genre.PLATAFOM, 10));
+	        games.add(new Game(2, "Resident Evil 4 (", 60.00, Genre.ACTION, 3));
+	        games.add(new Game(3, "Elden Ring", 80.00, Genre.ADVENTURE, 10));
+	        games.add(new Game(4, "Minecraft", 15.00, Genre.SANDBOX, 10));
+	        		
+	        customers.add(new Customer(1, "Manolo Ceballos", 80));
+	        customers.add(new Customer(2, "Marta Espinela", 290));
+	        customers.add(new Customer(3, "Anais Torpila", 45));
+	        customers.add(new Customer(4, "Jorge Hernandez", 130));
 	    }
 	    
 	    public void añadirJuego(Game game) {
@@ -94,7 +104,7 @@ public class Store {
 	    	Game game = buscarGame(idGame);
 	    	
     						
-    		if( game.getStock() < cantidad || cantidad <= 1) {
+    		if( game.getStock() < cantidad || cantidad <= 0) {
     							
     			throw new StockInsuficienteException(
     					"No hay Stock duficiente para su compra");

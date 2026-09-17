@@ -9,5 +9,6 @@ public enum Genre {
 	SPORTS,
 	SIMULATTION,
 	PLATAFOM,
-	PUZZLE
+	PUZZLE,
+	SANDBOX
 }
