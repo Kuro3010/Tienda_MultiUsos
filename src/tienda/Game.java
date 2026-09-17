@@ -7,7 +7,6 @@ public class Game {
 	private String titulo;
 	private double precio;
 	private Genre genero;
-	private int añadir;
 	private int stock;
 	
 	public Game(int id, String titulo, double precio, Genre genero, int stock) {
