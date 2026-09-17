@@ -71,8 +71,59 @@ public class Store {
 	    	
 	    }
 	    
+	    public Game BuscarJuegoPorGenero(Genre genero) throws GeneroNoContieneJuegoException{
+	    	
+	    	for (Game game : games) {
+	    		
+	    		
+	    		if( game.getGenero() == genero) {
+	    			return game;
+	    		}
+	    	}
+	    	
+	    	throw new GeneroNoContieneJuegoException(
+	    			"No tenemos ningún juego del genero: " + genero);
+	    	
+	    }
 	    
 	    
+	    public boolean ComprarVideojuegos(int idCustomer, int idGame, int cantidad) throws CustomerNoEncontradoException, GameNoEncontradoException, SaldoInsuficienteException, StockInsuficienteException {
+	    	
+	    	
+	    	Customer customer = buscarCustomer(idCustomer);
+	    	Game game = buscarGame(idGame);
+	    	
+    						
+    		if( game.getStock() > cantidad && cantidad <= 1) {
+    							
+    			throw new StockInsuficienteException(
+    					"No hay Stock duficiente para su compra");
+    							
+    		}else {
+    					
+    			game.reducirStock(cantidad);
+    							
+    		}	
+    		
+    		Purchase purchase = new Purchase (customer  );
+    		
+    						
+    		if( customer.getBalance() < purchase.getTotal()) {
+    							
+    			throw new SaldoInsuficienteException(
+    				"No tienes saldo suficiente para hacer la compra"
+    					);
+  
+    		} else {
+    			
+    			customer.reducirSaldo(purchase.getTotal());
+    		
+    		}
+	    			
+	    	
+	    	return true;
+	    	
+	    }
 	    
 	}
 

@@ -15,7 +15,7 @@ public class Purchase {
         this.cantidades = new ArrayList<>();
     }
 
-    public void añadirJuego(Game juego, int cantidad) {
+    public void añadirAticulo(Game juego, int cantidad) {
         juegos.add(juego);
         cantidades.add(cantidad);
     }
@@ -24,7 +24,7 @@ public class Purchase {
         return comprador;
     }
 
-    public List<Game> getJuegos() {
+    public List<Game> getJuegosACOmprar() {
         return juegos;
     }
 
