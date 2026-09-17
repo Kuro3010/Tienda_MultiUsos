@@ -28,7 +28,7 @@ public class Store {
 	    	games.add(game);
 	    }
 	    
-	    public Game buscarGame(int id) throws GameNoEncontradoException{
+	    public Game buscarGame(int id) throws GameNoEncontradoException {
 	    	
 	    	for (Game game : games) {
 	    		
@@ -41,5 +41,42 @@ public class Store {
 	    			"No existe ningún juego con el identificador: " + id
 	    	);
 	    }
-		
+	    
+	    
+	    public Customer buscarCustomer(int id) throws CustomerNoEncontradoException {
+	    	
+	    	for (Customer customer : customers) {
+	    		
+	    		if(customer.getId() == id) {
+	    			return customer;
+	    		}
+	    		
+	    	}
+	    	
+	    	throw new CustomerNoEncontradoException(
+	    			"No existe un comprador con esa identificacion: " + id);
+	    }
+	    
+	    public Game BuscarJuegoPorTexto(String texto) throws JuegoNoContieneTextoException{
+	    	
+	    	for (Game game : games) {
+	    		
+	    		if( game.getTitulo().contains(texto.toUpperCase())){
+	    			return game;
+	    		}
+	    	}
+	    	
+	    	throw new JuegoNoContieneTextoException(
+	    			"No exixte un juego que contenga: " + texto);
+	    	
+	    }
+	    
+	    
+	    
+	    
 	}
+
+
+
+
+

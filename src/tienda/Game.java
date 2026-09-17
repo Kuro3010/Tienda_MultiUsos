@@ -23,7 +23,7 @@ public class Game {
 	}
 
 	public String getTitulo() {
-	    return titulo;
+	    return titulo.toUpperCase();
 	}
 
 	public Genre getGenero() {
