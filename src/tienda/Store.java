@@ -24,11 +24,47 @@ public class Store {
 	        customers.add(new Customer(4, "Jorge Hernandez", 130));
 	    }
 	    
-	    public void añadirJuego(Game game) {
+	    public void añadirJuego(Game game) throws ArrayNullException {
 	    	
+	    	//añadimos las comprobaciones para añadir el juego.
 	    	for (Game gameExistente : games) {
 	    		
-	    		if (gameExistente.getId() == game.getId()) {
+	    		if(game != null) {
+		    		
+		    		if (gameExistente.getTitulo() != null
+		    				&& !gameExistente.getTitulo().trim().isEmpty()) {
+		    		}
+		    		else
+		    			{
+		    			throw new ArrayNullException("El array es nulo o vacio en el TItulo");		    			
+		    		}
+		    		
+		    		if (String.valueOf(gameExistente.getPrecio()) != null 
+		    				&& !String.valueOf(gameExistente.getPrecio()).trim().isEmpty()) {
+	    				
+		    		}else {
+		    			throw new ArrayNullException("El array es nulo o vacio en el Precio");
+		    		}
+		    		
+		    		if (gameExistente.getGenero() != null 
+		    				&& !String.valueOf(gameExistente.getGenero()).trim().isEmpty()) {
+		    			
+		    		}else{
+		    			throw new ArrayNullException("El array es nulo o vacio en el Genero");
+		    		}
+		    		
+		    		if(String.valueOf(gameExistente.getStock()) != null 
+		    				&& !String.valueOf(gameExistente.getStock()).trim().isEmpty()) {
+		    			
+		    		}else {
+		    			throw new ArrayNullException("El array es nulo o vacio en el Stock");
+		    		}
+	    		}
+	    	}
+	    		
+	    	for (Game gameExistente : games) {
+	    		
+	    		if (gameExistente.equals(game)) {
 	    			throw new IllegalArgumentException(
 	    					"Ya existe un videojuego con el indicador: " 
 	    			+ game.getId()
@@ -67,68 +103,63 @@ public class Store {
 	    			"No existe un comprador con esa identificacion: " + id);
 	    }
 	    
-	    public Game BuscarJuegoPorTexto(String texto) throws JuegoNoContieneTextoException{
+	    public ArrayList<Game> BuscarJuegoPorTexto(String texto){
+	    	String UpperCase = texto.toUpperCase();
+	    	ArrayList<Game> games = new ArrayList<Game>();
 	    	
 	    	for (Game game : games) {
 	    		
-	    		if( game.getTitulo().contains(texto.toUpperCase())){
-	    			return game;
-	    		}
-	    	}
+	    		if( game.getTitulo().toUpperCase().contains(UpperCase))games.add(game);
 	    	
-	    	throw new JuegoNoContieneTextoException(
-	    			"No exixte un juego que contenga: " + texto);
+	    	
+	    	}
+	    	return games;
 	    	
 	    }
 	    
-	    public Game BuscarJuegoPorGenero(Genre genero) throws GeneroNoContieneJuegoException{
+	    public ArrayList<Game> BuscarJuegoPorGenero(Genre genero) {
+	    	ArrayList<Game> games = new ArrayList<Game>();
 	    	
 	    	for (Game game : games) {
 	    		
-	    		
-	    		if( game.getGenero() == genero) {
-	    			return game;
+	    		if( game.getGenero() == genero) games.add(game);{
 	    		}
 	    	}
-	    	
-	    	throw new GeneroNoContieneJuegoException(
-	    			"No tenemos ningún juego del genero: " + genero);
-	    	
+	    	return games;
+
 	    }
 	    
 	    
-	    public boolean ComprarVideojuegos(int idCustomer, int idGame, int cantidad) throws CustomerNoEncontradoException, GameNoEncontradoException, SaldoInsuficienteException, StockInsuficienteException {
+	    public boolean ComprarVideojuegos(int idCustomer, int idGame, int cantidad) 
+	    		throws CustomerNoEncontradoException, GameNoEncontradoException,
+	    		SaldoInsuficienteException, StockInsuficienteException, CantidadInvalidaException {
 	    	
 	    	
 	    	Customer customer = buscarCustomer(idCustomer);
 	    	Game game = buscarGame(idGame);
 	    	
     						
-    		if( game.getStock() < cantidad || cantidad <= 0) {
+    		if( game.ComprobarStock(cantidad)) {
     							
     			throw new StockInsuficienteException(
     					"No hay Stock duficiente para su compra");
     							
-    		}else {
-    					
-    			game.reducirStock(cantidad);
-    							
-    		}	
-    		
-    		Purchase purchase = new Purchase (customer, game, cantidad);
-    		
-    						
-    		if( customer.getBalance() < purchase.getTotal()) {
+    		}
+    								
+    		if(customer.tieneCantidad(game, cantidad)) {
     							
     			throw new SaldoInsuficienteException(
     				"No tienes saldo suficiente para hacer la compra"
     					);
   
-    		} else {
+    		} 
     			
-    			customer.reducirSaldo(purchase.getTotal());
+    			game.reducirStock(cantidad);
+    			customer.reducirSaldo(cantidad,game);
+    			Purchase purchase = new Purchase(customer,game, cantidad);
     		
-    		}
+    			//Reparamos el orden de las operaciones y su funcionalidad.
+    			
 	    	return true;
 	    	
 	    }

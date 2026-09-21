@@ -24,28 +24,35 @@ public class Customer {
         return balance;
     }
 
-    public void añadirSaldo(double cantidad) {
+    public void añadirSaldo(double cantidad) throws CantidadInvalidaException{
+    	if(cantidad < 0) throw new CantidadInvalidaException("La Cantidad es negativa y no se permite");{
         balance += cantidad;
+    	}
     }
 
-    public void reducirSaldo(double cantidad) throws SaldoInsuficienteException {
+    public void reducirSaldo(double cantidad, Game game) throws SaldoInsuficienteException {
         if (cantidad > balance) {
             throw new SaldoInsuficienteException(
                 "No hay saldo suficiente para realizar la operación."
             );
         }
 
-        balance -= cantidad;
+        balance -= game.getPrecio() * cantidad;
     }
-
-    public boolean tieneCantidad(double cantidad) {
-        return balance >= cantidad;
+    
+    //Cmabiamos el metodo para que sea acertado con la Store.
+    public boolean tieneCantidad(Game game, int cantidad) {
+        return balance >= game.getPrecio() * cantidad;
     }
+    
+    
 
-    @Override
+   //Remplazamos el ToString a uno de mayor calidad.
     public String toString() {
-        return "Id: " + id + "\n" +
-               "Nombre: " + name + "\n" +
-               "Balance: " + balance + "\n";
+        return String.format(""" 
+        		ID: %d
+        		Name: %s
+        		Balance: %f
+        		""",id, name, balance);
     }
 }
