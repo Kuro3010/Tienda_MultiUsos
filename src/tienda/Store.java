@@ -1,6 +1,14 @@
 package tienda;
 
+import java.io.File;
 import java.util.*;
+
+import exceptions.ArrayNullException;
+import exceptions.CantidadInvalidaException;
+import exceptions.CustomerNoEncontradoException;
+import exceptions.GameNoEncontradoException;
+import exceptions.SaldoInsuficienteException;
+import exceptions.StockInsuficienteException;
 
 public class Store {
 
@@ -14,7 +22,7 @@ public class Store {
 	        purchases = new ArrayList<>();
 
 	        games.add(new Game(1, "Mario 64", 25.00, Genre.PLATAFOM, 10));
-	        games.add(new Game(2, "Resident Evil 4 (", 60.00, Genre.ACTION, 3));
+	        games.add(new Game(2, "Resident Evil 4", 60.00, Genre.ACTION, 3));
 	        games.add(new Game(3, "Elden Ring", 80.00, Genre.ADVENTURE, 10));
 	        games.add(new Game(4, "Minecraft", 15.00, Genre.SANDBOX, 10));
 	        		
@@ -23,6 +31,40 @@ public class Store {
 	        customers.add(new Customer(3, "Anais Torpila", 45));
 	        customers.add(new Customer(4, "Jorge Hernandez", 130));
 	    }
+	    
+		public void loadGames (String filename) throws Exception{
+			File file = new File(filename);
+			try(Scanner scanner = new Scanner(file)){
+				
+				String line = null;
+				
+				while(scanner.hasNextLine()) {
+					line = scanner.nextLine();
+					String[] splitLine = line.split(";");
+					int id = Integer.parseInt(splitLine[0]);
+					String name = splitLine[1];
+					Genre genre = Genre.valueOf(splitLine[2]);
+					double price = Double.parseDouble(splitLine[3]);
+					int stock = Integer.parseInt(splitLine[4]);
+				}
+				}
+			}
+		
+		public void loadCustomer (String filename) throws Exception{
+			File file = new File(filename);
+			try(Scanner scanner = new Scanner(file)){
+				
+				String line = null;
+				
+				while(scanner.hasNextLine()) {
+					line = scanner.nextLine();
+					String[] splitLine = line.split(";");
+					int id = Integer.parseInt(splitLine[0]);
+					String name = splitLine[1];
+					double balance = Double.parseDouble(splitLine[2]);
+					}
+				}
+			}
 	    
 	    public void añadirJuego(Game game) throws ArrayNullException {
 	    	
@@ -163,6 +205,17 @@ public class Store {
 	    	return true;
 	    	
 	    }
+
+		public ArrayList<Game> getGames() {
+			return games;
+		}
+
+		public ArrayList<Purchase> getPurchases() {
+			return purchases;
+		}
+		public ArrayList<Customer> getCustomers(){
+			return customers;
+		}
 	    
 	}
 

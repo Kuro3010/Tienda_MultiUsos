@@ -1,5 +1,8 @@
 package tienda;
 
+import exceptions.CantidadInvalidaException;
+import exceptions.SaldoInsuficienteException;
+
 public class Customer {
 
     private int id;
@@ -10,7 +13,7 @@ public class Customer {
         this.id = id;
         this.name = name;
         this.balance = balance;
-    }
+    }  
 
     public int getId() {
         return id;

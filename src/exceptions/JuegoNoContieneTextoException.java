@@ -1,4 +1,4 @@
-package tienda;
+package exceptions;
 
 public class JuegoNoContieneTextoException extends Exception {
 

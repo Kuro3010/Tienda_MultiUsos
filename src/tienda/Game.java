@@ -1,5 +1,8 @@
 package tienda;
 
+import exceptions.CantidadInvalidaException;
+import exceptions.StockInsuficienteException;
+
 public class Game {
 	
 	
